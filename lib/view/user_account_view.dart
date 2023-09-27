@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_pati/view/changing_account_info_view.dart';
 import 'package:my_pati/view/login_view.dart';
+import 'package:my_pati/auth/auth.dart';
 
 class UserAccountView extends StatelessWidget {
   const UserAccountView({super.key});
@@ -35,15 +37,16 @@ class UserAccountView extends StatelessWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('user',
+                        Text(Auth.realname,
                             textAlign: TextAlign.start,
-                            style: TextStyle(fontSize: 16)),
+                            style: const TextStyle(fontSize: 16)),
                         Text(
-                          'usertest@.com',
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
+                          Auth.username,
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 16),
                           textAlign: TextAlign.start,
                         ),
                       ],
@@ -70,46 +73,66 @@ class UserAccountView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Icon(Icons.edit, color: Colors.grey[800]),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              margin:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text(
-                                'Ubah kata sandi',
-                                style: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontSize: 18,
+                        Material(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const ChangePasswordView();
+                              }));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.edit, color: Colors.grey[800]),
+                                const SizedBox(
+                                  width: 20,
                                 ),
-                              ),
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                      top: 10, bottom: 10),
+                                  child: Text(
+                                    'Ubah kata sandi',
+                                    style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.contact_page,
-                              color: Colors.grey[800],
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              margin:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text(
-                                'Ubah data diri',
-                                style: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontSize: 18,
+                        Material(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const UpdateAccountInfoView();
+                              }));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.contact_page,
+                                  color: Colors.grey[800],
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                      top: 10, bottom: 10),
+                                  child: Text(
+                                    'Ubah data diri',
+                                    style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
@@ -122,7 +145,7 @@ class UserAccountView extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return const LoginView();
                     }));

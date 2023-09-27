@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_pati/auth/auth.dart';
+import 'package:my_pati/view/changing_account_info_view.dart';
 import 'package:my_pati/view/main_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -12,12 +13,13 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      return constraints.maxWidth <= 400
-          ? const PortraitLoginView()
-          : const LandscapeLoginView();
-    }));
+    return Scaffold(
+      body: OrientationBuilder(
+        builder: (context, orientation) => orientation == Orientation.portrait
+            ? const PortraitLoginView()
+            : const LandscapeLoginView(),
+      ),
+    );
   }
 }
 
@@ -56,122 +58,140 @@ class _LandscapeLoginViewState extends State<LandscapeLoginView> {
     return Scaffold(
       body: SafeArea(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      child: const Text(
-                        'Selamat datang',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Montserrat',
-                          color: Colors.blue,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          child: const Text(
+                            'Selamat datang',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Montserrat',
+                              color: Colors.blue,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      child: const Text(
-                        'di myPati',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Montserrat',
-                          color: Colors.green,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          child: const Text(
+                            'di myPati',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Montserrat',
+                              color: Colors.green,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Silahkan Masuk',
-                    style: TextStyle(fontSize: 24),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextField(
-                    controller: usernameController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.person_2_rounded),
-                      label: Text('Nama Pengguna'),
-                    ),
-                  ),
-                  TextField(
-                    controller: passwordController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
-                      label: Text('Kata Sandi'),
-                    ),
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Lupa kata sandi?',
-                        style: TextStyle(fontSize: 18),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Silahkan Masuk',
+                        style: TextStyle(fontSize: 24),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              alignment: Alignment.center,
-              child: Material(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(20),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      if (usernameController.text == username &&
-                          passwordController.text == password) {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                              return const MainView();
-                            }));
-                      } else {
-                        failedLogin();
-                      }
-                    });
-                  },
-                  borderRadius: BorderRadius.circular(20),
-                  child: const SizedBox(
-                    width: 120,
-                    height: 60,
-                    child: Center(
-                      child: Text(
-                        'Masuk',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
               ),
             ),
-            const Expanded(
+            Expanded(
               flex: 1,
-              child: SizedBox(),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: usernameController,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.person_2_rounded),
+                          label: Text('Nama Pengguna'),
+                        ),
+                      ),
+                      TextField(
+                        controller: passwordController,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.lock),
+                          label: Text('Kata Sandi'),
+                        ),
+                        obscureText: true,
+                        obscuringCharacter: '*',
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return const ChangeUserInfoView();
+                            }));
+                          },
+                          child: const Text(
+                            'Lupa kata sandi?',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        child: Material(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(20),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (usernameController.text == username &&
+                                    passwordController.text == password) {
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const MainView();
+                                  }));
+                                } else {
+                                  failedLogin();
+                                }
+                              });
+                            },
+                            borderRadius: BorderRadius.circular(20),
+                            child: const SizedBox(
+                              width: 120,
+                              height: 60,
+                              child: Center(
+                                child: Text(
+                                  'Masuk',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
+            const SizedBox(),
           ],
         ),
       ),
@@ -269,7 +289,12 @@ class _PortraitLoginViewState extends State<PortraitLoginView> {
               Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const ChangeUserInfoView();
+                        }));
+                      },
                       child: const Text('Lupa kata sandi?',
                           style: TextStyle(fontSize: 18))))
             ],
